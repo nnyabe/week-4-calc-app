@@ -8,7 +8,7 @@ FROM openjdk:17
 WORKDIR .
 
 # Copy the built JAR file into the container
-COPY target/to-do-0.0.1-SNAPSHOT.jar app/target/to-do-0.0.1-SNAPSHOT.jar .
+COPY *.jar .
 
 # Expose the application port
 EXPOSE 8080
