@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #007BFF;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            max-width: 400px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            color: black;
+        }
+        input {
+            width: 70%;
+            padding: 8px;
+            margin-right: 5px;
+        }
+        button {
+            padding: 8px;
+            background-color: black;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .todo-item {
+            display: flex;
+            justify-content: space-between;
+            background: #f8f9fa;
+            padding: 8px;
+            margin-top: 5px;
+            border-radius: 5px;
+        }
+        .edit {
+            background-color: blue;
+        }
+        .delete {
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+<h1>Todo List</h1>
+<div class="container">
+    <input type="text" id="todoInput" placeholder="Add a new task...">
+    <button onclick="addTodo()">Add</button>
+    <ul id="todoList"></ul>
+</div>
+
+<script>
+    let todos = [];
+
+    function addTodo() {
+        const input = document.getElementById("todoInput");
+        const text = input.value.trim();
+        if (text === "") return;
+
+        const todo = { id: Date.now(), text };
+        todos.push(todo);
+        input.value = "";
+        renderTodos();
+    }
+
+    function deleteTodo(id) {
+        todos = todos.filter(todo => todo.id !== id);
+        renderTodos();
+    }
+
+    function editTodo(id) {
+        const newText = prompt("Edit your task:", todos.find(t => t.id === id).text);
+        if (newText) {
+            todos = todos.map(todo => todo.id === id ? { ...todo, text: newText } : todo);
+            renderTodos();
+        }
+    }
+
+    function renderTodos() {
+        const list = document.getElementById("todoList");
+        list.innerHTML = "";
+        todos.forEach(todo => {
+            const li = document.createElement("li");
+            li.className = "todo-item";
+            li.innerHTML = `
+                <span>${todo.text}</span>
+                <div>
+                    <button class="edit" onclick="editTodo(${todo.id})">Edit</button>
+                    <button class="delete" onclick="deleteTodo(${todo.id})">Delete</button>
+                </div>
+            `;
+            list.appendChild(li);
+        });
+    }
+</script>
+</body>
+</html>
