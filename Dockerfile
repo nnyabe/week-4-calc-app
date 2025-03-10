@@ -5,7 +5,7 @@ LABEL authors="NnyabeChamamme"
 FROM openjdk:17
 
 # Set the working directory inside the container
-WORKDIR /to-do
+WORKDIR .
 
 # Copy the built JAR file into the container
 COPY to-do-0.0.1-SNAPSHOT.jar .
