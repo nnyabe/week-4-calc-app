@@ -32,7 +32,7 @@ jobs:
       - name: Build and tag Docker image
         run: |
           docker build -t week-4-repo .
-          docker tag week-4-repo:latest public.ecr.aws/l1r3k7b9/week-4-repo:latest
+          docker tag week-4-repo:latest public.ecr.aws/l1r3k7b9/week-4-repo:Chamamme_nnyabe_to-do
 
       - name: Push image to Amazon ECR Public
         run: |
