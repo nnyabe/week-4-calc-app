@@ -31,8 +31,8 @@ jobs:
 
       - name: Build and tag Docker image
         run: |
-          docker build -t chamamme_nnyabe_todo .
-          docker tag chamamme_nnyabe_todo public.ecr.aws/l1r3k7b9/week-4-repo:chamamme_nnyabe_todo
+          docker build -t week-4-repo .
+          docker tag week-4-repo:chamamme_nnyabe_todo public.ecr.aws/l1r3k7b9/week-4-repo:chamamme_nnyabe_todo
 
       - name: Push image to Amazon ECR Public
         run: |
