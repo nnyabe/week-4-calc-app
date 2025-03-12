@@ -7,14 +7,23 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #007BFF;
+            background: conic-gradient(from 180deg, #007BFF, #0056b3, #002766);
+            animation: gradientAnimation 5s infinite linear;
             color: white;
             text-align: center;
             padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+        @keyframes gradientAnimation {
+            0% { background: conic-gradient(from 180deg, #007BFF, #0056b3, #002766); }
+            100% { background: conic-gradient(from 360deg, #002766, #0056b3, #007BFF); }
         }
         .container {
             max-width: 400px;
-            margin: auto;
             background: white;
             padding: 20px;
             border-radius: 8px;
@@ -23,48 +32,94 @@
         }
         input {
             width: 70%;
-            padding: 8px;
+            padding: 10px;
             margin-right: 5px;
+            font-size: 16px;
         }
         button {
-            padding: 8px;
-            background-color: black;
+            padding: 10px;
+            background: linear-gradient(135deg, #007bff, #0056b3);
             color: white;
             border: none;
             cursor: pointer;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+        button:hover {
+            background: linear-gradient(135deg, #0056b3, #004080);
         }
         .todo-item {
             display: flex;
             justify-content: space-between;
+            align-items: center;
             background: #f8f9fa;
-            padding: 8px;
-            margin-top: 5px;
+            padding: 10px;
+            margin-top: 8px;
             border-radius: 5px;
+            font-size: 18px;
         }
-        .edit {
-            background-color: blue;
+        .todo-item span {
+            flex-grow: 1;
+            padding-right: 15px;
         }
-        .delete {
-            background-color: red;
+        .quote-box {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            color: white;
+            font-size: 18px;
+            width: 250px;
+            text-align: center;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+            color: black;
         }
     </style>
 </head>
 <body>
 <h1>Todo List</h1>
+<div class="quote-box" id="quoteBox">"Believe in yourself and all that you are."</div>
 <div class="container">
     <input type="text" id="todoInput" placeholder="Add a new task...">
     <button onclick="addTodo()">Add</button>
     <ul id="todoList"></ul>
 </div>
 
+<div id="editModal" class="modal">
+    <h3>Edit Task</h3>
+    <input type="text" id="editInput">
+    <button onclick="saveEdit()">Save</button>
+    <button onclick="closeModal()">Cancel</button>
+</div>
+
 <script>
     let todos = [];
+    let editingId = null;
+    let quotes = [
+        "Believe in yourself and all that you are.",
+        "Success is not final, failure is not fatal.",
+        "Dream big and dare to fail.",
+        "Hardships often prepare people for an extraordinary destiny.",
+        "Keep going. Everything you need will come to you at the perfect time."
+    ];
 
     function addTodo() {
         const input = document.getElementById("todoInput");
         const text = input.value.trim();
         if (text === "") return;
-
         const todo = { id: Date.now(), text };
         todos.push(todo);
         input.value = "";
@@ -77,11 +132,22 @@
     }
 
     function editTodo(id) {
-        const newText = prompt("Edit your task:", todos.find(t => t.id === id).text);
+        editingId = id;
+        document.getElementById("editInput").value = todos.find(t => t.id === id).text;
+        document.getElementById("editModal").style.display = "block";
+    }
+
+    function saveEdit() {
+        const newText = document.getElementById("editInput").value;
         if (newText) {
-            todos = todos.map(todo => todo.id === id ? { ...todo, text: newText } : todo);
+            todos = todos.map(todo => todo.id === editingId ? { ...todo, text: newText } : todo);
             renderTodos();
         }
+        closeModal();
+    }
+
+    function closeModal() {
+        document.getElementById("editModal").style.display = "none";
     }
 
     function renderTodos() {
@@ -100,6 +166,13 @@
             list.appendChild(li);
         });
     }
+
+    function changeQuote() {
+        const quoteBox = document.getElementById("quoteBox");
+        let randomIndex = Math.floor(Math.random() * quotes.length);
+        quoteBox.innerText = quotes[randomIndex];
+    }
+    setInterval(changeQuote, 3000);
 </script>
 </body>
 </html>
