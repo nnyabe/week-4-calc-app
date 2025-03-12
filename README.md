@@ -1,4 +1,4 @@
-# Todo List Application
+# Todo List Application Using Fargate and ECR
 
 This is a **full-stack Todo List application** built using **Java 17 (Spring Boot) for the backend** and **HTML, CSS, and JavaScript for the frontend**. The application allows users to **add, delete, and update** todos, with all data being persisted in a backend database.
 
