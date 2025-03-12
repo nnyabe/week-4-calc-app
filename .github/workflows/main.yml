@@ -12,6 +12,15 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Build JAR file with Maven
+        run: mvn clean package
         
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v2
@@ -31,9 +40,16 @@ jobs:
 
       - name: Build and tag Docker image
         run: |
-          docker build -t chamamme_nnyabe_todo .
-          docker tag chamamme_nnyabe_todo public.ecr.aws/l1r3k7b9/week-4-repo:chamamme_nnyabe_todo
+          docker build -t week-4-repo .
+          docker tag week-4-repo:latest public.ecr.aws/l1r3k7b9/week-4-repo:chamamme_nnyabe_to-do
 
       - name: Push image to Amazon ECR Public
         run: |
-          docker push public.ecr.aws/l1r3k7b9/week-4-repo:chamamme_nnyabe_todo
+          docker push public.ecr.aws/l1r3k7b9/week-4-repo:chamamme_nnyabe_to-do
+          
+      - name: Deploy to ECS
+        run: |
+          aws ecs update-service --cluster week-4-cluster \
+            --service Week-4-Service \
+            --force-new-deployment \
+            --region eu-west-1

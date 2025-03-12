@@ -1,5 +1,5 @@
 # Use an official OpenJDK 21 runtime as base image
-FROM openjdk:21-jdk-slim
+FROM openjdk:17-jdk-slim
 
 LABEL authors="NnyabeChamamme"
 
