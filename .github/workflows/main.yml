@@ -51,4 +51,5 @@ jobs:
         run: |
           aws ecs update-service --cluster week-4-cluster \
             --service Week-4-Service \
-            --force-new-deployment
+            --force-new-deployment \
+            --region eu-west-1
