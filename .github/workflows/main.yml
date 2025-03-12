@@ -46,3 +46,9 @@ jobs:
       - name: Push image to Amazon ECR Public
         run: |
           docker push public.ecr.aws/l1r3k7b9/week-4-repo:chamamme_nnyabe_to-do
+          
+      - name: Deploy to ECS
+        run: |
+          aws ecs update-service --cluster week-4-cluster \
+            --service Week-4-Service \
+            --force-new-deployment
