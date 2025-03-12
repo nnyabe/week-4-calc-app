@@ -7,8 +7,9 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background: conic-gradient(from 180deg, #007BFF, #0056b3, #002766);
-            animation: gradientAnimation 5s infinite linear;
+            background: linear-gradient(45deg, #007BFF, #FF5733, #33FF57, #5733FF);
+            background-size: 400% 400%;
+            animation: linearGradientAnimation 10s infinite linear;
             color: white;
             text-align: center;
             padding: 20px;
@@ -17,10 +18,12 @@
             align-items: center;
             height: 100vh;
             flex-direction: column;
+            overflow: hidden;
         }
-        @keyframes gradientAnimation {
-            0% { background: conic-gradient(from 180deg, #007BFF, #0056b3, #002766); }
-            100% { background: conic-gradient(from 360deg, #002766, #0056b3, #007BFF); }
+        @keyframes linearGradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
         .container {
             max-width: 400px;
@@ -61,10 +64,11 @@
         .todo-item span {
             flex-grow: 1;
             padding-right: 15px;
+
         }
         .quote-box {
             position: absolute;
-            top: 20px;
+            top: 80px;
             right: 20px;
             background: rgba(255, 255, 255, 0.2);
             padding: 15px;
